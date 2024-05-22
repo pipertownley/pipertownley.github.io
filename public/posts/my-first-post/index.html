@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Zen of Rust | My New Hugo Site</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Rust for Pythonistas: The Zen of&hellip; Rust? Introduction This series is intended to help Pythonistas come to appreciate rust as both an alternative and compliment to python. We&rsquo;ll be exploring technical and philosophical aspects of both languages, and dipping in to some of the inner workings to take a look some important differences and surprising similarities.
+While I would encourage anyone with interest to try learning rust, my hope is that this exploration will ultimately help us write more reliable and maintainable python.">
+    <meta name="generator" content="Hugo 0.126.1">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/posts/my-first-post/">
+    
+
+    <meta property="og:url" content="http://localhost:1313/posts/my-first-post/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="Zen of Rust">
+  <meta property="og:description" content="Rust for Pythonistas: The Zen of… Rust? Introduction This series is intended to help Pythonistas come to appreciate rust as both an alternative and compliment to python. We’ll be exploring technical and philosophical aspects of both languages, and dipping in to some of the inner workings to take a look some important differences and surprising similarities.
+While I would encourage anyone with interest to try learning rust, my hope is that this exploration will ultimately help us write more reliable and maintainable python.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-05-21T21:57:43-06:00">
+    <meta property="article:modified_time" content="2024-05-21T21:57:43-06:00">
+
+  <meta itemprop="name" content="Zen of Rust">
+  <meta itemprop="description" content="Rust for Pythonistas: The Zen of… Rust? Introduction This series is intended to help Pythonistas come to appreciate rust as both an alternative and compliment to python. We’ll be exploring technical and philosophical aspects of both languages, and dipping in to some of the inner workings to take a look some important differences and surprising similarities.
+While I would encourage anyone with interest to try learning rust, my hope is that this exploration will ultimately help us write more reliable and maintainable python.">
+  <meta itemprop="datePublished" content="2024-05-21T21:57:43-06:00">
+  <meta itemprop="dateModified" content="2024-05-21T21:57:43-06:00">
+  <meta itemprop="wordCount" content="1574">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Zen of Rust">
+  <meta name="twitter:description" content="Rust for Pythonistas: The Zen of… Rust? Introduction This series is intended to help Pythonistas come to appreciate rust as both an alternative and compliment to python. We’ll be exploring technical and philosophical aspects of both languages, and dipping in to some of the inner workings to take a look some important differences and surprising similarities.
+While I would encourage anyone with interest to try learning rust, my hope is that this exploration will ultimately help us write more reliable and maintainable python.">
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        My New Hugo Site
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Posts
+      </aside>
+      
+
+
+
+
+
+
+
+
+
+
+  <div id="sharing" class="mt3 ananke-socials">
+    
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Zen of Rust</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2024-05-21T21:57:43-06:00">May 21, 2024</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><h1 id="rust-for-pythonistas-the-zen-of-rust">Rust for Pythonistas: The Zen of&hellip; Rust?</h1>
+<h2 id="introduction">Introduction</h2>
+<p>This series is intended to help Pythonistas come to appreciate rust as both an alternative and compliment to python.
+We&rsquo;ll be exploring technical and philosophical aspects of both languages, and dipping in to some of the inner workings to take a look some important differences and surprising similarities.</p>
+<p>While I would encourage anyone with interest to try learning rust, my hope is that this exploration will ultimately help us write more reliable and maintainable python.</p>
+<h3 id="who-is-this-for">Who is this for?</h3>
+<p>I&rsquo;m going to make some assumptions about you, dear reader, I hope you don&rsquo;t mind too much.</p>
+<ul>
+<li>You already have a pretty good grasp of python basics and terminology.</li>
+<li>You&rsquo;re pretty comfortable with python syntax.</li>
+<li>You&rsquo;re willing to maybe get a little bit outside your comfort zone if means you&rsquo;ll become better for it.</li>
+</ul>
+<h3 id="things-we-wont-be-covering">Things we won&rsquo;t be covering</h3>
+<ul>
+<li>This series is not intended to be a tutorial for python or rust.</li>
+<li>Reading this will not teach you how to program in either of these languages.</li>
+<li>This is not an argument for why you should adopt rust for yourself or your team.</li>
+</ul>
+<hr>
+<h2 id="the-zen-of-python">The Zen of Python</h2>
+<p><code>Long time Pythoneer Tim Peters succinctly channels the BDFL’s guiding principles for Python’s design into 20 aphorisms, only 19 of which have been written down.</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>If you open up a python shell and type <code>import this</code> and hit enter, you will be greeted with Tim Peters&rsquo; Zen of python.</p>
+<pre tabindex="0"><code>The Zen of python, by Tim Peters
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren&#39;t special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you&#39;re Dutch.
+Now is better than never.
+Although never is often better than *right* now.
+If the implementation is hard to explain, it&#39;s a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let&#39;s do more of those!
+</code></pre><p>Kateryna Koidan explains how to &ldquo;translate these beautifully written principles into actionable insights&rdquo; in her blog post, <a href="https://learnpython.com/blog/zen-of-python/">What is the Zen of python?</a>.</p>
+<h2 id="the-zen-of-rust">The Zen of&hellip; Rust?</h2>
+<p>Does rust follow the zen of python? Does it do it well? Maybe even better than python? I don&rsquo;t know, maybe a little bit.</p>
+<h2 id="beautiful-is-better-than-ugly">Beautiful is better than ugly.</h2>
+<p>“What you do, the way you think, makes you beautiful.” ― Scott Westerfeld, Uglies</p>
+<p>Some people say rust is ugly. Beauty is subjective. But I think we can agree that clear, easy to understand code is more beautiful than code that is messy and hard to understand.</p>
+<p>Let&rsquo;s take a look at some python code to return all possible permutations of an array of integers<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">permute</span>(nums: List[int]) <span style="color:#f92672">-&gt;</span> List[List[int]]:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">backtrack</span>(start):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> start <span style="color:#f92672">==</span> len(nums):
+</span></span><span style="display:flex;"><span>            permutations<span style="color:#f92672">.</span>append(nums[:])
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(start, len(nums)):
+</span></span><span style="display:flex;"><span>                nums[start], nums[i] <span style="color:#f92672">=</span> nums[i], nums[start]
+</span></span><span style="display:flex;"><span>                backtrack(start <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>                nums[start], nums[i] <span style="color:#f92672">=</span> nums[i], nums[start]
+</span></span><span style="display:flex;"><span>    permutations <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    backtrack(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> permutations
+</span></span></code></pre></div><p>Here&rsquo;s a similar solution in rust<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">permute</span>(nums: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span>) -&gt; Vec<span style="color:#f92672">&lt;</span>Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> result <span style="color:#f92672">=</span> Vec::new();
+</span></span><span style="display:flex;"><span>        backtrack(nums, vec![], <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> result);
+</span></span><span style="display:flex;"><span>        result
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">backtrack</span>(nums: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span>, path: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span>, result: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">mut</span> Vec<span style="color:#f92672">&lt;</span>Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;&gt;</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> nums.is_empty() {
+</span></span><span style="display:flex;"><span>        result.push(path);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">..</span>nums.len() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> new_nums <span style="color:#f92672">=</span> nums.clone();
+</span></span><span style="display:flex;"><span>        new_nums.remove(i);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> new_path <span style="color:#f92672">=</span> path.clone();
+</span></span><span style="display:flex;"><span>        new_path.push(nums[i]);
+</span></span><span style="display:flex;"><span>        backtrack(new_nums, new_path, result);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Both of these are essentially the same solution. At least they look similar, have a similar structure, and aim to solve the same problem by similar means. They both define a <code>permute</code> function that accumulates the results of a recursive function, <code>backtrack</code>.</p>
+<p>The rust example is a bit more verbose with 18 lines of code vs python&rsquo;s 11. But is longer necessarily uglier?</p>
+<p>The python example defines the recursive function <em>inside</em> the calling function. The author&rsquo;s intent isn&rsquo;t immediately clear.
+The reason for this choice, nor it&rsquo;s implication are apparent. What&rsquo;s happening there?</p>
+<p>Let&rsquo;s break it apart and see if we can figure it out.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">backtrack</span>(start):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> start <span style="color:#f92672">==</span> len(nums):
+</span></span><span style="display:flex;"><span>        permutations<span style="color:#f92672">.</span>append(nums[:])
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(start, len(nums)):
+</span></span><span style="display:flex;"><span>            nums[start], nums[i] <span style="color:#f92672">=</span> nums[i], nums[start]
+</span></span><span style="display:flex;"><span>            backtrack(start <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            nums[start], nums[i] <span style="color:#f92672">=</span> nums[i], nums[start]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">permute</span>(nums: List[int]) <span style="color:#f92672">-&gt;</span>List[List[int]]:
+</span></span><span style="display:flex;"><span>    permutations <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    backtrack(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> permutations
+</span></span></code></pre></div><p>Uh, oh! When we run this code we get an error!</p>
+<pre tabindex="0"><code>&gt;&gt;&gt; result = permute(nums)
+Traceback (most recent call last):
+  File &#34;&lt;stdin&gt;&#34;, line 1, in &lt;module&gt;
+  File &#34;&lt;stdin&gt;&#34;, line 3, in permute
+  File &#34;&lt;stdin&gt;&#34;, line 7, in backtrack
+  File &#34;&lt;stdin&gt;&#34;, line 7, in backtrack
+  File &#34;&lt;stdin&gt;&#34;, line 7, in backtrack
+  File &#34;&lt;stdin&gt;&#34;, line 3, in backtrack
+NameError: name &#39;permutations&#39; is not defined
+</code></pre><p>It appears the function <code>backtrack</code> doesn&rsquo;t have access to the variables in the scope of the calling <code>permute</code> function.
+When the <code>backtrack</code> function is defined inside the <code>permute</code> function, it does. What gives?</p>
+<p>A function definition nested inside another acts a lot like a closure, inheriting the values of the parent scope. But its not really clear from the code that this is what&rsquo;s happening. You just kind of have to know, and if you don&rsquo;t, you won&rsquo;t usually know there&rsquo;s a problem until that code gets executed, and hopefully it will be kind enough to fail right away.</p>
+<p>I want to take a moment to acknowledge that the python solution used thus far is a bit unfair. I chose it because it&rsquo;s a top performing solution on leetcode, and because it would also let me bring up this topic, and leads us to the next section. There&rsquo;s clearer ways to write the same code, and it should perform similarly well. We&rsquo;ll return to that topic in a later section.</p>
+<h2 id="explicit-is-better-than-implicit">Explicit is better than implicit.</h2>
+<p>You&rsquo;ve likely read stories of folks getting started with rust complaining of &ldquo;fighting with the borrow checker.&rdquo; This is because rust enforces a very strict, but very simple set of rules for memory access. If you break them, the compiler will not compile. It will give you a really helpful message about where the problem is, and many times will even suggest how to fix it. Rust is an explicit language.</p>
+<p>Lets take another look at the first function from our previous rust example.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">permute</span>(nums: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span>) -&gt; Vec<span style="color:#f92672">&lt;</span>Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> result <span style="color:#f92672">=</span> Vec::new();
+</span></span><span style="display:flex;"><span>        backtrack(nums, vec![], <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> result);
+</span></span><span style="display:flex;"><span>        result
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It takes in an argument called <code>nums</code> that&rsquo;s a vector of i32 (that&rsquo;s just rust lingo for a list of whole numbers), and returns a vector of vectors of i32. The simplest result would look like this <code>[[0]]</code>.</p>
+<p>It declares a mutable variable called <code>result</code> and assigns it a new empty vector.
+It calls a function called <code>backtrack</code>, where it passes in <code>nums</code>, <code>vec![]</code>, and a mutable reference to <code>result</code> to save whatever its going to do to <code>nums</code>. But wait, hold up, what&rsquo;s that <code>vec![]</code> thing? Oh, that&rsquo;s a macro. This is where rust hides the bodies &ndash; err, the magic. It&rsquo;s an area where implicit things can also happen in rust, except we like to call them <code>derived</code> because we don&rsquo;t like to talk about that&hellip; shhh.</p>
+<p>But here&rsquo;s the thing, even when rust has implicit behavior, its typically for your convenience, and the compiler will still <del>yell at you</del> attempt offer helpful advice if you&rsquo;re doing it wrong. The problems creep in when you&rsquo;re using macros someone else wrote, which is very often the case. Luckily, the compiler also <del>yells at</del> gives helpful advice them when they do it wrong, so it&rsquo;s a fairly robust chain of things generally working, which is nice.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">backtrack</span>(nums: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span>, path: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span>, result: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">mut</span> Vec<span style="color:#f92672">&lt;</span>Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;&gt;</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> nums.is_empty() {
+</span></span><span style="display:flex;"><span>        result.push(path);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">..</span>nums.len() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> new_nums <span style="color:#f92672">=</span> nums.clone();
+</span></span><span style="display:flex;"><span>        new_nums.remove(i);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> new_path <span style="color:#f92672">=</span> path.clone();
+</span></span><span style="display:flex;"><span>        new_path.push(nums[i]);
+</span></span><span style="display:flex;"><span>        backtrack(new_nums, new_path, result);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We can see here that <code>nums</code> and <code>path</code> expect a vector of i32, and <code>result</code> expects a mutable reference to a vector of vectors of i32.
+The <code>if</code> statement on the first line of the function body is also pretty easy to understand. If <code>nums</code> is empty, push the path vector onto the result and return.</p>
+<p>Moving on to the <code>for</code> loop in the next section</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">..</span>nums.len()
+</span></span></code></pre></div><p>The python equivalent<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup> is</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(nums))
+</span></span></code></pre></div><p>On the next line <code>nums.clone()</code> makes an explicit copy of <code>nums</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> new_nums <span style="color:#f92672">=</span> nums.clone();
+</span></span></code></pre></div><p>It&rsquo;s more or less equivalent to a python&rsquo;s <code>copy.deepcopy</code>, in that it creates a wholly new version of an object in memory.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>new_nums <span style="color:#f92672">=</span> copy<span style="color:#f92672">.</span>deepcopy(nums)
+</span></span></code></pre></div><p>You&rsquo;ll notice that the python implementation of <code>backtrack</code> doesn&rsquo;t make use of deepcopy. It uses a different approach to managing the state while backtracking. Some of the reasons for this will be covered in the next sections.</p>
+<p><em>Deep breath</em>
+<em>Exhale</em></p>
+<p>You still with me? It&rsquo;s kind of a lot so far, and we&rsquo;re just getting started, really.
+Get a glass of water, stretch. If you have a pet, give them a pat. Then come back for part 2.</p>
+<hr>
+<p>footnotes</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>From the abstract of <a href="https://peps.python.org/pep-0020/">(PEP 20)</a>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://leetcode.com/problems/permutations/solutions/4863110/permute">https://leetcode.com/problems/permutations/solutions/4863110/permute</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://leetcode.com/problems/permutations/solutions/3797989/video-backtracking-100-unlocking-permutations">https://leetcode.com/problems/permutations/solutions/3797989/video-backtracking-100-unlocking-permutations</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>In rust, <code>..</code> is a range. It&rsquo;s actually a struct, called <a href="https://doc.rust-lang.org/std/ops/struct.Range.html"><code>std::ops::Range</code></a>.
+There&rsquo;s also <code>..=</code> which is an inclusive range. It&rsquo;s also a struct called <a href="https://doc.rust-lang.org/std/ops/struct.RangeInclusive.html"><code>std::ops::RangeInclusive</code></a>. Ranges are syntatic sugar. I think they&rsquo;re pretty sweet. Check out the rest <a href="https://doc.rust-lang.org/std/ops/index.html#structs">here</a>.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:1313/" >
+    &copy;  My New Hugo Site 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

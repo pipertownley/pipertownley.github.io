@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>unsafe {}</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on unsafe {}</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 21 May 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Zen of Rust</title>
+      <link>http://localhost:1313/posts/zen-of-rust-part-1/</link>
+      <pubDate>Tue, 21 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/zen-of-rust-part-1/</guid>
+      <description>Rust for Pythonistas The Zen of&amp;hellip; Rust? Does rust follow the zen of python? Does it do it well? In this series we&amp;rsquo;ll take a look at some of rust&amp;rsquo;s most salient features and why you, as a pythonista, may come to really vibe with some of rust&amp;rsquo;s Zen. 🦀 (come on, doesn&amp;rsquo;t that crab look chill af?)&#xA;The Zen of Python Long time Pythoneer Tim Peters succinctly channels the BDFL’s guiding principles for Python’s design into 20 aphorisms, only 19 of which have been written down.</description>
+    </item>
+  </channel>
+</rss>

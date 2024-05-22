@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Zen of Rust | unsafe {}</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Rust for Pythonistas The Zen of&hellip; Rust? Does rust follow the zen of python? Does it do it well? In this series we&rsquo;ll take a look at some of rust&rsquo;s most salient features and why you, as a pythonista, may come to really vibe with some of rust&rsquo;s Zen. 🦀 (come on, doesn&rsquo;t that crab look chill af?)
+The Zen of Python Long time Pythoneer Tim Peters succinctly channels the BDFL’s guiding principles for Python’s design into 20 aphorisms, only 19 of which have been written down.">
+    <meta name="generator" content="Hugo 0.126.1">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/posts/zen-of-rust-part-1/">
+    
+
+    <meta property="og:url" content="http://localhost:1313/posts/zen-of-rust-part-1/">
+  <meta property="og:site_name" content="unsafe {}">
+  <meta property="og:title" content="Zen of Rust">
+  <meta property="og:description" content="Rust for Pythonistas The Zen of… Rust? Does rust follow the zen of python? Does it do it well? In this series we’ll take a look at some of rust’s most salient features and why you, as a pythonista, may come to really vibe with some of rust’s Zen. 🦀 (come on, doesn’t that crab look chill af?)
+The Zen of Python Long time Pythoneer Tim Peters succinctly channels the BDFL’s guiding principles for Python’s design into 20 aphorisms, only 19 of which have been written down.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-05-21T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-05-21T00:00:00+00:00">
+
+  <meta itemprop="name" content="Zen of Rust">
+  <meta itemprop="description" content="Rust for Pythonistas The Zen of… Rust? Does rust follow the zen of python? Does it do it well? In this series we’ll take a look at some of rust’s most salient features and why you, as a pythonista, may come to really vibe with some of rust’s Zen. 🦀 (come on, doesn’t that crab look chill af?)
+The Zen of Python Long time Pythoneer Tim Peters succinctly channels the BDFL’s guiding principles for Python’s design into 20 aphorisms, only 19 of which have been written down.">
+  <meta itemprop="datePublished" content="2024-05-21T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-05-21T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1363">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Zen of Rust">
+  <meta name="twitter:description" content="Rust for Pythonistas The Zen of… Rust? Does rust follow the zen of python? Does it do it well? In this series we’ll take a look at some of rust’s most salient features and why you, as a pythonista, may come to really vibe with some of rust’s Zen. 🦀 (come on, doesn’t that crab look chill af?)
+The Zen of Python Long time Pythoneer Tim Peters succinctly channels the BDFL’s guiding principles for Python’s design into 20 aphorisms, only 19 of which have been written down.">
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        unsafe {}
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Posts
+      </aside>
+      
+
+
+
+
+
+
+
+
+
+
+  <div id="sharing" class="mt3 ananke-socials">
+    
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Zen of Rust</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2024-05-21T00:00:00Z">May 21, 2024</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><h1 id="rust-for-pythonistas">Rust for Pythonistas</h1>
+<hr>
+<h3 id="the-zen-of-rust">The Zen of&hellip; Rust?</h3>
+<p>Does rust follow the zen of python? Does it do it well? In this series we&rsquo;ll take a look at some of rust&rsquo;s most salient features and why you, as a pythonista, may come to really vibe with some of rust&rsquo;s Zen. 🦀 (come on, doesn&rsquo;t that crab look chill af?)</p>
+<hr>
+<h3 id="the-zen-of-python">The Zen of Python</h3>
+<p><code>Long time Pythoneer Tim Peters succinctly channels the BDFL’s guiding principles for Python’s design into 20 aphorisms, only 19 of which have been written down.</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>If you open up a python shell and type <code>import this</code> and hit enter, you will be greeted with Tim Peters&rsquo; Zen of python.</p>
+<pre tabindex="0"><code>The Zen of python, by Tim Peters
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren&#39;t special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you&#39;re Dutch.
+Now is better than never.
+Although never is often better than *right* now.
+If the implementation is hard to explain, it&#39;s a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let&#39;s do more of those!
+</code></pre><p>Kateryna Koidan explains how to &ldquo;translate these beautifully written principles into actionable insights&rdquo; in her blog post, <a href="https://learnpython.com/blog/zen-of-python/">What is the Zen of python?</a>.</p>
+<h2 id="beautiful-is-better-than-ugly">Beautiful is better than ugly.</h2>
+<p>“What you do, the way you think, makes you beautiful.” ― Scott Westerfeld, Uglies</p>
+<p>Beautiful code is in the eye of the next person who has to maintain it a year after you&rsquo;ve left.
+Ugly code wakes up an SRE at 1:46am on a Wednesday.</p>
+<p>I&rsquo;ve written a lot of production python code. I&rsquo;ve maintained far, far more. Readable code that is easy to follow is easy to debug and easier to maintain. This is important for python applications, as many bugs are only discovered at runtime, and often when under load.</p>
+<p>But even the cleanest code can be defeated by unexpected data formats, missing fields, etc. Unless you take very deliberate measures to catch and handle exceptions, it can be near impossible to track down the source of intermittent crashes, spurious bugs, and incomplete execution paths.</p>
+<p>While python lends itself to getting from idea to working code quickly, it does so with some deep trade offs that I wish we were more upfront about as a community. I don&rsquo;t intend to give much attention to the pain points of python in production, as I&rsquo;d really rather show how painless rust can be. And while not always the most beautiful at first glance, I think you will come to appreciate the thought that went into making coding in rust truly delightful.</p>
+<h2 id="explicit-is-better-than-implicit">Explicit is better than implicit</h2>
+<p>Rust is an explicitly typed language, like C/C++, Java, etc. The syntax is very similar to python type hints. However, rust strictly enforces types and will not compile if there are any mis-matched types in your program.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// this is a string literal.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> var: <span style="color:#66d9ef">str</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;the quick brown fox&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// this is how you create an empty List[int] in rust, except they&#39;re called Vectors.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> nums: <span style="color:#66d9ef">i32</span> <span style="color:#f92672">=</span> Vec::new();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// functions take typed parameters
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// this checks if 2 is in a vector and returns some index, or returns none
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">has_two</span>(nums: Vec<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span>) -&gt; Option<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">i32</span><span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i, num <span style="color:#66d9ef">in</span> enumerate(nums) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> num <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Some(i)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    None
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The <code>Option</code> type in rust is pretty special. It&rsquo;s an <code>enum</code> type with two variants, <code>Some(T)</code>, and <code>None</code>. You see, in rust there is no null. The None enum variant shouldn&rsquo;t be confused with python&rsquo;s None, which is essentially just another way to say null. In rust it is fundamentally different, it&rsquo;s a variant of a concrete type.</p>
+<p>Why does this matter? Well, it enables some extremely powerful patterns for flow control and error handling.</p>
+<p>Consider the case of looking for a key in a dictionary. Rust calls dictionaries <code>Hashmaps</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> s <span style="color:#f92672">=</span> Hashmap::from([(<span style="color:#e6db74">&#34;key&#34;</span>, <span style="color:#e6db74">&#34;val&#34;</span>), (<span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#e6db74">&#34;bar&#34;</span>)]);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// foo is a valid key in the map so value is going to get an Option::Some type returned to it
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> value <span style="color:#f92672">=</span> s.get(<span style="color:#e6db74">&#34;foo&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">match</span> value {
+</span></span><span style="display:flex;"><span>    Some(a) <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span>, a),
+</span></span><span style="display:flex;"><span>    None <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;foo not found&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// baz isn&#39;t a valid key in this map, so value will get an Option::None
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> value <span style="color:#f92672">=</span> s.get(<span style="color:#e6db74">&#34;baz&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">match</span> value {
+</span></span><span style="display:flex;"><span>    Some(a) <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span>, a),
+</span></span><span style="display:flex;"><span>    None <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;baz not found&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>output:</p>
+<pre tabindex="0"><code>bar
+baz not found
+</code></pre><p>What happens if we leave out one of these cases, or <code>match arms</code> as we call them in rust?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> value <span style="color:#f92672">=</span> s.get(<span style="color:#e6db74">&#34;baz&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">match</span> value {
+</span></span><span style="display:flex;"><span>    Some(a) <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span>, a),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><pre tabindex="0"><code>error[E0004]: non-exhaustive patterns: `None` not covered
+   --&gt; src/main.rs:9:11
+    |
+9   |     match value {
+    |           ^^^^^ pattern `None` not covered
+    |
+note: `Option&lt;&amp;&amp;str&gt;` defined here
+   --&gt; /Users/piper/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/option.rs:570:1
+    |
+570 | pub enum Option&lt;T&gt; {
+    | ^^^^^^^^^^^^^^^^^^
+...
+574 |     None,
+    |     ---- not covered
+    = note: the matched value is of type `Option&lt;&amp;&amp;str&gt;`
+help: ensure that all possible cases are being handled by adding a match arm with a wildcard pattern or an explicit pattern as shown
+    |
+10  ~         Some(a) =&gt; println!(&#34;{}&#34;, a),
+11  ~         None =&gt; todo!(),
+    |
+
+For more information about this error, try `rustc --explain E0004`.
+error: could not compile `rust-examples` (bin &#34;rust-examples&#34;) due to 1 previous error
+</code></pre><p>Uh, oh! We got a compilation error! It&rsquo;s telling us that we haven&rsquo;t covered <code>None</code>.</p>
+<pre tabindex="0"><code>help: ensure that all possible cases are being handled by adding a match arm with a wildcard pattern or an explicit pattern as shown
+    |
+10  ~         Some(a) =&gt; println!(&#34;{}&#34;, a),
+11  ~         None =&gt; todo!(),
+</code></pre><p>The compiler tells us how to fix our code. We have to cover the None pattern, but we can use the todo! macro to let the compiler know we intend to implement this later<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
+<p>Rust has a similar enum type called <code>Result</code>. Where <code>Option</code> is used when an action may return no value, <code>Result</code> is used when an action can produce an error. It also has two variants, Ok(T), and Err(E).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">use</span> std::fs::File;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> std::io::Read;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// open a file
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> file <span style="color:#f92672">=</span> File::open(<span style="color:#e6db74">&#34;some.txt&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">match</span> file {
+</span></span><span style="display:flex;"><span>        Ok(file) <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// read the file...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        },
+</span></span><span style="display:flex;"><span>        Err(err) <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>            println!(<span style="color:#e6db74">&#34;failed to open file: </span><span style="color:#e6db74">{err}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Because <code>match</code> requires all variants of an enum to be handled, you&rsquo;re naturally forced to handle errors as well as the optimistic cases.</p>
+<p>This also gives rise to a delightful (or what I think is a delightful) pattern for message handling that prevents you from having those &ldquo;oops I forgot to handle that one weird message type!!&rdquo; moments.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">Message</span> {
+</span></span><span style="display:flex;"><span>    Connect(String),
+</span></span><span style="display:flex;"><span>    Disconnect(String),
+</span></span><span style="display:flex;"><span>    Publish(String, Post),
+</span></span><span style="display:flex;"><span>    Subscribe(String),
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Post</span> {
+</span></span><span style="display:flex;"><span>    body: String,
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// .. additional fields omitted
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">handle_message</span>(msg: <span style="color:#a6e22e">Message</span>) -&gt; Result<span style="color:#f92672">&lt;</span>(), std::io::Error<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">match</span> msg {
+</span></span><span style="display:flex;"><span>        Message::Connect(broker) <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>            connect(broker);
+</span></span><span style="display:flex;"><span>            Ok(())
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        Message::Disconnect(broker) <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>            disconnect(broker);
+</span></span><span style="display:flex;"><span>            Ok(())
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        Message::Publish(topic, post) <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>            publish(topic, post);
+</span></span><span style="display:flex;"><span>            Ok(())
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        Message::Subscribe(topic) <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>            subscribe(topic);
+</span></span><span style="display:flex;"><span>            Ok(())
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">connect</span>() {
+</span></span><span style="display:flex;"><span>    todo!()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">disconnect</span>() {
+</span></span><span style="display:flex;"><span>    todo!()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">publish</span>(topic: String, post: <span style="color:#a6e22e">Post</span>) {
+</span></span><span style="display:flex;"><span>    todo!()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">subscribe</span>(topic: String) {
+</span></span><span style="display:flex;"><span>    todo!()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see, we handle every message variant, and if we didn&rsquo;t we&rsquo;d get a similar compiler error as before.
+We&rsquo;ve also established a simple api contract, as any message must be of one of the variants and every variant must be handled.
+Of course this is an incredibly over-simplified example, but by simply accepting or returning a single concrete type, we&rsquo;ve prevented a large number of potential runtime bugs from malformed messages or unhandled message types. That&rsquo;s peace of mind. That is Zen.</p>
+<h2 id="simple-is-better-than-complex">Simple is better than complex.</h2>
+<p>If you&rsquo;ve enjoyed what you&rsquo;re read so far, please come back for part 2.</p>
+<hr>
+<p>footnotes</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>From the abstract of <a href="https://peps.python.org/pep-0020/">(PEP 20)</a>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Note, todo! is just shorthand for panic! with a specific message: “not yet implemented”&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://localhost:1313/" >
+    &copy;  unsafe {} 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>
