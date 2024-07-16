@@ -1,6 +1,6 @@
 +++
-title = 'Zen of Rust'
-date = 2024-05-21
+title = 'Zen of Rust (Part 2)'
+date = 2024-07-15
 draft = false
 +++
 # Rust for Pythonistas
