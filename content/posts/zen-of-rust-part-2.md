@@ -22,9 +22,11 @@ One of the most challenging aspects of programming is dealing with memory alloca
 
 A major attraction of Python is that you can write very complex programs without ever thinking about memory management. This is great for quickly delivering new features. However, this convenience comes with significant tradeoffs in runtime performance, which can lead to increased infrastructure costs. (And decreased site reliability, but that's a rant for another time.)
 
-Rust, on the other hand, requires the developer to consider memory usage; however, its model is designed to be straightforward and safe. The first layer of safety is that variables are immutable unless you explicitly declare them as mutable. This fundamental principle reduces unintended side effects and enhances code reliability.
+Rust, on the other hand, requires the developer to consider memory usage; however, its model is designed to be straightforward and safe.
 
-Building on this, rust introduces the concept of ownership, which ensures that each piece of data has a single owner at any point in time. An "owner" in rust is the variable that holds the data. The data is automatically deallocated when the owner goes out of scope, eliminating the need for a garbage collector. This makes Rust both efficient and predictable in terms of performance.
+The first layer of safety is that variables are immutable unless you explicitly declare them as mutable. This fundamental principle reduces unintended side effects and enhances code reliability.
+
+Building on this, rust introduces the concept of ownership, which ensures that each piece of data has a single owner at any point in time. An "owner" in rust is the variable that holds the data. The data is automatically deallocated, or `dropped` when the owner goes out of scope, eliminating the need for a garbage collector. This makes Rust both efficient and predictable in terms of performance.
 
 For example:
 ```rust
@@ -65,7 +67,6 @@ You can borrow immutable references as many times as you like, but mutable refer
 3. You cannot have both a mutable and an immutable references to the same data at the same time.
 
 These rules ensures that when you have a mutable reference to data, you have exclusive access to that data. This also ensures that when you read data, its not going to change out from underneath you.
-
 ```rust
 fn main() {
     let mut s = String::from("hello");
@@ -79,7 +80,7 @@ fn main() {
     println!("{}", r3);
 }
 ```
-This code compiles because the immutable references r1 and r2 are moved into println's scope and are deallocated when println returns.
+This code compiles because the immutable references r1 and r2 are moved into `println`'s' scope and are dropped when `println` returns.
 
 ```rust
 fn main() {
@@ -127,10 +128,8 @@ fn main() {
 ```
 
 In this example, because `r` is defined in the main scope, it's lifetime is the same as main. But `x` is defined inside an inner scope of main. When the inner scope finishes, `x` will be automatically dropped.
-This is
 
 Let's uncomment that last line and see what error we get.
-
 ```rust
 error[E0597]: `x` does not live long enough
  --> src/main.rs:5:13
